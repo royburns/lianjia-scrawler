@@ -38,6 +38,8 @@ password = secret
 
 + Please add your favor region at scrawl.py `regionlist = [u'chaoyang', u'xicheng', u'dongcheng'] # only pinyin support`
 
++ Currently, the default city is beijing. If you want to modify the city, please modify `BASE_URL` at `core.py`
+
 + Start `python scrawl.py` and enjoy! (Please comment line13 if you have already got community list)
 
 ## Database Information
