@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import settings
 import model
 import misc
 import time
@@ -7,8 +8,7 @@ import urllib2
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
-#You could modify city at here.
-BASE_URL = u"http://bj.lianjia.com/"
+BASE_URL = u"http://%s.lianjia.com/" % (settings.CITY)
 
 def GetHouseByCommunitylist(communitylist):
     logging.info("Get House Infomation")

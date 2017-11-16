@@ -1,5 +1,6 @@
 import core
 import model
+import settings
 
 def get_communitylist():
 	res = []
@@ -8,7 +9,7 @@ def get_communitylist():
 	return res
 
 if __name__=="__main__":
-    regionlist = [u'chaoyang'] # only pinyin support
+    regionlist = settings.REGIONLIST # only pinyin support
     model.database_init()
     core.GetCommunityByRegionlist(regionlist) # Init,scrapy celllist and insert database; could run only 1st time
     communitylist = get_communitylist() # Read celllist from database

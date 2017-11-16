@@ -1,36 +1,34 @@
 from peewee import *
 import datetime
-from ConfigParser import SafeConfigParser
+import settings
 
-config = SafeConfigParser()
-config.read('config.ini')
 
-if config.getboolean('Mysql', 'enable'):
+if settings.DBENGINE.lower() == 'mysql':
 	database = MySQLDatabase(
-		config.get('Mysql', 'scheme'),
-		host=config.get('Mysql', 'host'),
-		port=config.getint('Mysql', 'port'),
-		user=config.get('Mysql', 'user'),
-		passwd=config.get('Mysql', 'password'),
+		settings.DBNAME,
+		host=settings.DBHOST,
+		port=settings.DBPORT,
+		user=settings.DBUSER,
+		passwd=settings.DBPASSWORD,
 		charset='utf8',
 		use_unicode=True,
 	)
 
-elif config.getboolean('Sqlite', 'enable'):
-	database = SqliteDatabase(config.get('Sqlite', 'dbname'))
+elif settings.DBENGINE.lower() == 'sqlite3':
+	database = SqliteDatabase(settings.DBNAME)
 
-elif config.getboolean('Postgresql', 'enable'):
+elif settings.DBENGINE.lower() == 'postgresql':
 	database = PostgresqlDatabase(
-		config.get('Postgresql', 'scheme'),
-		user=config.get('Postgresql', 'user'),
-		password=config.get('Postgresql', 'password'),
-		host=config.get('Postgresql', 'host'),
+		settings.DBNAME,
+		user=settings.DBUSER,
+		password=settings.DBPASSWORD,
+		host=settings.DBHOST,
 		charset='utf8',
 		use_unicode=True,
 	)
 
 else:
-	raise AttributeError("Please enable a datatbase at config.ini")
+	raise AttributeError("Please setup datatbase at settings.py")
 
 class BaseModel(Model):
     class Meta:
