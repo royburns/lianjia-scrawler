@@ -13,6 +13,7 @@
 3. virtualenv lianjia
 4. source lianjia/bin/activate
 5. pip install -r requirements.txt
+6. python scrawl.py
 ```
 + Setting DB config at config.ini
 ```
@@ -41,6 +42,7 @@ password = secret
 + Currently, the default city is beijing. If you want to modify the city, please modify `BASE_URL` at `core.py`
 
 + Start `python scrawl.py` and enjoy! (Please comment line13 if you have already got community list)
+
 
 ## Database Information
 ```
