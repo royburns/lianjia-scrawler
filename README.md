@@ -55,7 +55,8 @@ Rentinfo租售房源信息 (houseID, title, link, region, zone, meters, other, s
 + 代码存放在`jianwei`目录
 
 ## 爬虫代码分析
-+ 开始抓取前先观察下目标页面或网站的结构，其中比较重要的是URL的结构。链家网的二手房列表页面共有100个，URL结构为http://bj.lianjia.com/ershoufang/pg9/，其中bj表示城市，/ershoufang/是频道名称，pg9是页面码。我们要抓取的是北京的二手房频道，所以前面的部分不会变，属于固定部分，后面的页面码需要在1-100间变化，属于可变部分。将URL分为两部分，前面的固定部分赋值给url，后面的可变部分使用for循环。我们以根据小区名字搜索二手房出售情况为例：
++ 开始抓取前先观察下目标页面或网站的结构，其中比较重要的是URL的结构。链家网的二手房列表页面共有100个，URL结构为http://bj.lianjia.com/ershoufang/pg9/
++ 其中bj表示城市，/ershoufang/是频道名称，pg9是页面码。我们要抓取的是北京的二手房频道，所以前面的部分不会变，属于固定部分，后面的页面码需要在1-100间变化，属于可变部分。将URL分为两部分，前面的固定部分赋值给url，后面的可变部分使用for循环。我们以根据小区名字搜索二手房出售情况为例：
 ```
 BASE_URL = u"http://bj.lianjia.com/"
 url = BASE_URL + u"ershoufang/rs" + urllib2.quote(communityname.encode('utf8')) + "/"
