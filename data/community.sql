@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.7.17)
+# Host: 127.0.0.1 (MySQL 5.5.54-log)
 # Database: lianjiaSpider
-# Generation Time: 2017-11-28 12:50:39 +0000
+# Generation Time: 2017-11-29 02:04:49 +0000
 # ************************************************************
 
 
@@ -27,18 +27,18 @@ DROP TABLE IF EXISTS `community`;
 
 CREATE TABLE `community` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `Title` varchar(50) DEFAULT NULL,
-  `link` varchar(200) DEFAULT NULL,
-  `district` varchar(50) DEFAULT NULL,
-  `bizcircle` varchar(50) DEFAULT NULL,
-  `tagList` varchar(200) DEFAULT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `district` varchar(255) NOT NULL DEFAULT '',
+  `bizcircle` varchar(255) NOT NULL DEFAULT '',
+  `tagList` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `community` WRITE;
 /*!40000 ALTER TABLE `community` DISABLE KEYS */;
 
-INSERT INTO `community` (`id`, `Title`, `link`, `district`, `bizcircle`, `tagList`)
+INSERT INTO `community` (`id`, `title`, `link`, `district`, `bizcircle`, `tagList`)
 VALUES
 	(1,'荣丰2008','http://bj.lianjia.com/xiaoqu/1111027378998/','西城','广安门',''),
 	(2,'远见名苑','http://bj.lianjia.com/xiaoqu/1111027381801/','西城','广安门',''),
@@ -3379,7 +3379,7 @@ VALUES
 	(3337,'玉泉路16号院','http://bj.lianjia.com/xiaoqu/1111027381962/','海淀','玉泉路',''),
 	(3338,'大泥湾','http://bj.lianjia.com/xiaoqu/1111027373797/','海淀','中关村','');
 
-INSERT INTO `community` (`id`, `Title`, `link`, `district`, `bizcircle`, `tagList`)
+INSERT INTO `community` (`id`, `title`, `link`, `district`, `bizcircle`, `tagList`)
 VALUES
 	(3339,'金沟河5号院','http://bj.lianjia.com/xiaoqu/1111027377124/','海淀','五棵松',''),
 	(3340,'软件园小区','http://bj.lianjia.com/xiaoqu/1111027379027/','海淀','中关村',''),
@@ -6676,7 +6676,7 @@ VALUES
 	(6631,'龙脉花园','http://bj.lianjia.com/xiaoqu/1111046824645/','昌平','昌平其它',''),
 	(6632,'总政机关住宅小区','http://bj.lianjia.com/xiaoqu/1111047364687/','昌平','回龙观','');
 
-INSERT INTO `community` (`id`, `Title`, `link`, `district`, `bizcircle`, `tagList`)
+INSERT INTO `community` (`id`, `title`, `link`, `district`, `bizcircle`, `tagList`)
 VALUES
 	(6633,'巩华家园北二村','http://bj.lianjia.com/xiaoqu/119823949696691/','昌平','沙河',''),
 	(6634,'霍家营','http://bj.lianjia.com/xiaoqu/1112036835126313/','昌平','霍营',''),
@@ -9979,7 +9979,7 @@ VALUES
 	(9931,'太玉园西区','http://bj.lianjia.com/xiaoqu/1111027380131/','通州','通州其它',''),
 	(9932,'小稿村','http://bj.lianjia.com/xiaoqu/1111027380740/','通州','九棵树(家乐福)','');
 
-INSERT INTO `community` (`id`, `Title`, `link`, `district`, `bizcircle`, `tagList`)
+INSERT INTO `community` (`id`, `title`, `link`, `district`, `bizcircle`, `tagList`)
 VALUES
 	(9933,'西门斗子营23号院','http://bj.lianjia.com/xiaoqu/1111027381057/','通州','新华大街',''),
 	(9934,'天地美墅','http://bj.lianjia.com/xiaoqu/1111043683862/','通州','九棵树(家乐福)',''),
