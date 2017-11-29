@@ -1,6 +1,6 @@
 # lianjia-scrawler
 + This repo provides a tool to scrawl house info at LianJia.com and data would be stored in Mysql datatbase (Currently it also supports Sqlite and Postgres). It is easy to export to CSV or other formates. 
-+ Using Python Pandas to analyse lianjia data to learn about onsale house info in one city.
++ Using Python Pandas ([source code](https://github.com/XuefengHuang/lianjia-scrawler/blob/master/data/lianjia.ipynb)) to analyse lianjia data to learn about onsale house info in one city.
 + You also can [sync Mysql to Elasticsearch](https://github.com/siddontang/go-mysql-elasticsearch). In this way, you can use [kibana](https://github.com/elastic/kibana) to analyse these data.
 + This tool could collect community infomation from each region at first, then you'd like to use these communities to learn about onsale, history price, sold and rent information.
 + Please modify cookie info when this tool is blocked by lianjia due to ip traffic issue.
