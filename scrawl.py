@@ -4,7 +4,7 @@ import settings
 
 def get_communitylist():
 	res = []
-	for community in model.Community.select():
+	for community in model.Community.select().where(model.Community.onsale>0):
 		res.append(community.title)
 	return res
 

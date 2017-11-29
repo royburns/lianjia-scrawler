@@ -36,6 +36,11 @@ class House(BaseModel):
     agency      = CharField()
     time        = DateField()
     url         = CharField()
+    direction   = CharField()
+    floor       = CharField()
+    total_floor = CharField()
+    year        = IntegerField()
+    decoration  = CharField()
 
 def database_init():
     database.connect()
@@ -52,6 +57,27 @@ def get_source_code(url):
         return
 
     return source_code
+
+def parse_house(url, info_dict):
+    source_code = get_source_code(url)
+    soup = BeautifulSoup(source_code, 'lxml')
+    divtag = soup.find_all('div', class_="infolist_box")
+    tds = []
+    for dttag in divtag:
+        bodytag = dttag.find_all("tbody")
+        for body in bodytag:
+            trtag = body.find_all("tr")
+            for tr in trtag:
+                tds.append(tr.findAll('td'))
+    try:
+        info_dict.update({'direction':tds[1][1].get_text().strip()})
+        info_dict.update({'floor':tds[3][0].get_text().strip()})
+        info_dict.update({'total_floor':tds[3][1].get_text().strip()})
+        info_dict.update({'year':tds[4][0].get_text().strip()})
+        info_dict.update({'decoration':tds[5][0].get_text().strip()})
+    except:
+        pass
+    House.insert(**info_dict).upsert().execute()
 
 database_init()
 for i in range(0,PAGE+1):
@@ -76,5 +102,5 @@ for i in range(0,PAGE+1):
         info_dict.update({'agency':td[6].get_text().strip()})
         info_dict.update({'time':td[7].get_text().strip()})
         info_dict.update({'url':BASE_URL + td[8].a.get('href')})
-        House.insert(**info_dict).upsert().execute()
+        parse_house(BASE_URL + td[8].a.get('href'),info_dict)
     print 'Page%d Finish' % i 

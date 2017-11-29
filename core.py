@@ -223,11 +223,18 @@ def get_community_perregion(regionname=u'xicheng'):
 
                 district = name.find("a", {"class":"district"})
                 info_dict.update({u'district':district.get_text()})
+                
                 bizcircle = name.find("a", {"class":"bizcircle"})
                 info_dict.update({u'bizcircle':bizcircle.get_text()})
 
                 tagList = name.find("div", {"class":"tagList"})
                 info_dict.update({u'tagList':tagList.get_text().strip('\n')})
+
+                onsale = name.find("a", {"class":"totalSellCount"})
+                info_dict.update({u'onsale':onsale.span.get_text().strip('\n')})
+
+                info_dict.update({u'id':name.get('data-housecode')})
+
             except:
                 continue
             # communityinfo insert into mysql

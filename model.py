@@ -35,12 +35,14 @@ class BaseModel(Model):
         database = database
 
 class Community(BaseModel):
-	id 		= PrimaryKeyField()
+	id 			= BigIntegerField(primary_key=True)
 	title 		= CharField()
 	link 		= CharField(unique=True)
 	district 	= CharField()
 	bizcircle 	= CharField()
 	tagList 	= CharField()
+	onsale 		= IntegerField()
+	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Houseinfo(BaseModel):
 	houseID 	= BigIntegerField(primary_key=True)
