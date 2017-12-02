@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import settings
 import model
@@ -218,6 +219,7 @@ def get_community_perregion(regionname=u'xicheng'):
             info_dict = {}
             try:
                 communitytitle = name.find("div", {"class":"title"})
+                title = communitytitle.get_text().strip('\n')
                 info_dict.update({u'title':communitytitle.get_text().strip('\n')})
                 info_dict.update({u'link':communitytitle.a.get('href')})
 
@@ -233,6 +235,9 @@ def get_community_perregion(regionname=u'xicheng'):
                 onsale = name.find("a", {"class":"totalSellCount"})
                 info_dict.update({u'onsale':onsale.span.get_text().strip('\n')})
 
+                onrent = name.find("a", {"title":title+u"租房"})
+                info_dict.update({u'onrent':onrent.get_text().strip('\n').split(u'套')[0]})
+
                 info_dict.update({u'id':name.get('data-housecode')})
 
             except:
@@ -241,6 +246,7 @@ def get_community_perregion(regionname=u'xicheng'):
             model.Community.insert(**info_dict).upsert().execute()
 
             time.sleep(1)
+        logging.info("%s: current page %d total pages %d" %(regionname, page+1, total_pages))
 
 def get_rent_percommunity(communityname):
     url = BASE_URL + u"zufang/rs" + urllib2.quote(communityname.encode('utf8')) + "/"

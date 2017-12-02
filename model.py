@@ -42,6 +42,7 @@ class Community(BaseModel):
 	bizcircle 	= CharField()
 	tagList 	= CharField()
 	onsale 		= IntegerField()
+	onrent 		= IntegerField()
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Houseinfo(BaseModel):
