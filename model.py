@@ -53,7 +53,7 @@ class Community(BaseModel):
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Houseinfo(BaseModel):
-	houseID 	= BigIntegerField(primary_key=True)
+	houseID 	= CharField(primary_key=True)
 	title 		= CharField()
 	link 		= CharField()
 	community 	= CharField()
@@ -70,7 +70,7 @@ class Houseinfo(BaseModel):
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Hisprice(BaseModel):
-	houseID 	= BigIntegerField()
+	houseID 	= CharField()
 	totalPrice 	= IntegerField()
 	date 		= DateTimeField(default=datetime.datetime.now)
 
@@ -78,7 +78,7 @@ class Hisprice(BaseModel):
 		primary_key = CompositeKey('houseID', 'totalPrice')
 
 class Sellinfo(BaseModel):
-	houseID 	= BigIntegerField(primary_key=True)
+	houseID 	= CharField(primary_key=True)
 	title 		= CharField()
 	link 		= CharField()
 	community 	= CharField()
@@ -95,7 +95,7 @@ class Sellinfo(BaseModel):
 	updatedate 	= DateTimeField(default=datetime.datetime.now)
 
 class Rentinfo(BaseModel):
-	houseID 	= BigIntegerField(primary_key=True)
+	houseID 	= CharField(primary_key=True)
 	title 		= CharField()
 	link 		= CharField()
 	region 		= CharField()
