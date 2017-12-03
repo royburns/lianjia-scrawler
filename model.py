@@ -43,6 +43,13 @@ class Community(BaseModel):
 	tagList 	= CharField()
 	onsale 		= IntegerField()
 	onrent 		= IntegerField()
+	year        = CharField(null=True)
+	housetype   = CharField(null=True)
+	cost        = CharField(null=True)
+	service		= CharField(null=True)
+	company     = CharField(null=True)
+	building_num= CharField(null=True)
+	house_num   = CharField(null=True)
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Houseinfo(BaseModel):
@@ -59,6 +66,8 @@ class Houseinfo(BaseModel):
 	totalPrice 	= IntegerField()
 	unitPrice 	= IntegerField()
 	followInfo 	= CharField()
+	subway  	= CharField()
+	decoration 	= CharField()
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Hisprice(BaseModel):
