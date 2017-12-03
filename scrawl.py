@@ -15,6 +15,4 @@ if __name__=="__main__":
     core.GetRentByRegionlist(regionlist)
     core.GetCommunityByRegionlist(regionlist) # Init,scrapy celllist and insert database; could run only 1st time
     communitylist = get_communitylist() # Read celllist from database
-    #core.GetHouseByCommunitylist(communitylist)
-    #core.GetRentByCommunitylist(communitylist)
     core.GetSellByCommunitylist(communitylist)

@@ -63,10 +63,9 @@ class Houseinfo(BaseModel):
 	direction 	= CharField()
 	floor 		= CharField()
 	taxtype 	= CharField()
-	totalPrice 	= IntegerField()
-	unitPrice 	= IntegerField()
+	totalPrice 	= CharField()
+	unitPrice 	= CharField()
 	followInfo 	= CharField()
-	subway  	= CharField()
 	decoration 	= CharField()
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
@@ -90,9 +89,9 @@ class Sellinfo(BaseModel):
 	floor 		= CharField()
 	status 		= CharField()
 	source 		= CharField()
-	totalPrice 	= IntegerField()
-	unitPrice 	= IntegerField()
-	dealdate 	= DateField()
+	totalPrice 	= CharField()
+	unitPrice 	= CharField()
+	dealdate 	= CharField(null=True)
 	updatedate 	= DateTimeField(default=datetime.datetime.now)
 
 class Rentinfo(BaseModel):
@@ -106,7 +105,7 @@ class Rentinfo(BaseModel):
 	subway 		= CharField()
 	decoration 	= CharField()
 	heating 	= CharField()
-	price 		= IntegerField()
+	price 		= CharField()
 	pricepre 	= CharField()
 	updatedate 	= DateTimeField(default=datetime.datetime.now)
 
