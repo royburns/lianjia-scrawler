@@ -33,101 +33,46 @@ REGIONLIST = [u'chaoyang', u'xicheng'] # 只支持拼音
 
 + 可以修改`scrawl.py`来只爬取在售房源信息或者成交房源信息或者租售房源信息
 
-## 数据库信息
++ 该程序提供两种方式爬取房源信息，一个是根据行政区，另一个是根据小区名。 但是根据行政区的只显示前100页的数据，对于像北京朝阳这种房源比较多的区，最好通过小区名才能爬全。具体内容请看下一部分。
+
+
+## 相关爬虫函数介绍
 ```
-Community小区信息（id, title, link, district, bizcurcle, taglist）
+行政区列表：
+regionlist = ['chaoyang', 'haidian'] 目前仅支持拼音
 
-Houseinfo在售房源信息（houseID, title, link, community, years, housetype, square, direction, floor, taxtype, totalPrice, unitPrice, followInfo, validdate)
+小区列表，可通过GetCommunityByRegionlist爬虫得到
+communitylist = [u'万科星园', u'上地东里']
 
-Hisprice历史成交信息（houseID，totalPrice，date）
+根据行政区来爬虫小区信息, 返回regionlist里面所有小区信息。
+core.GetCommunityByRegionlist(regionlist)
 
-Sellinfo成交房源信息(houseID, title, link, community, years, housetype, square, direction, floor, status, source,, totalPrice, unitPrice, dealdate, updatedate)
+根据行政区来爬虫在售房源信息， 返回regionlist里面所有在售房源信息。
+由于链家限制，仅支持爬前100页数据，可使用GetHouseByCommunitylist。
+core.GetHouseByRegionlist(regionlist)
 
-Rentinfo租售房源信息 (houseID, title, link, region, zone, meters, other, subway, decoration, heating, price, pricepre, updatedate)
+根据小区来爬虫在售房源房源信息，返回communitylist里面所有在售房源信息。
+core.GetHouseByCommunitylist(communitylist)
+
+根据行政区来爬虫出租房源信息，返回regionlist里面所有出租房源信息。
+由于链家限制，仅支持爬前100页数据，可使用GetRentByCommunitylist。
+core.GetRentByRegionlist(regionlist) 
+
+根据小区来爬虫出租房源信息，返回communitylist里面所有出租房源信息。
+core.GetRentByCommunitylist(communitylist)
+
+根据小区来爬虫成交房源信息，返回communitylist里面所有成交房源信息。
+部分数据无法显示因为这些数据仅在链家app显示
+core.GetSellByCommunitylist(communitylist)
+
 
 ```
 
-## 新增北京建委存放量房源信息爬虫(http://210.75.213.188/shh/portal/bjjs2016/index.aspx)
+## 新增[北京建委存放量房源](http://210.75.213.188/shh/portal/bjjs2016/index.aspx)信息爬虫:
 + 代码存放在`jianwei`目录
 
-## 爬虫代码分析
-+ 开始抓取前先观察下目标页面或网站的结构，其中比较重要的是URL的结构。链家网的二手房列表页面共有100个，URL结构为http://bj.lianjia.com/ershoufang/pg9/
-+ 其中bj表示城市，/ershoufang/是频道名称，pg9是页面码。我们要抓取的是北京的二手房频道，所以前面的部分不会变，属于固定部分，后面的页面码需要在1-100间变化，属于可变部分。将URL分为两部分，前面的固定部分赋值给url，后面的可变部分使用for循环。我们以根据小区名字搜索二手房出售情况为例：
-```
-BASE_URL = u"http://bj.lianjia.com/"
-url = BASE_URL + u"ershoufang/rs" + urllib2.quote(communityname.encode('utf8')) + "/"
-total_pages = misc.get_total_pages(url) //获取总页数信息
-for page in range(total_pages):
-    if page > 0:
-        url_page = BASE_URL + u"ershoufang/pg%drs%s/" % (page+1, urllib2.quote(communityname.encode('utf8')))
 
-//获取总页数信息代码
-def get_total_pages(url):
-    source_code = get_source_code(url)
-    soup = BeautifulSoup(source_code, 'lxml')
-    total_pages = 0
-    try:
-        page_info = soup.find('div',{'class':'page-box house-lst-page-box'})
-    except AttributeError as e:
-        page_info = None
-
-    if page_info == None:
-        return None
-    page_info_str = page_info.get('page-data').split(',')[0]  #'{"totalPage":5,"curPage":1}'
-    total_pages = int(page_info_str.split(':')[1])
-    return total_pages
-```
-
-+ 页面抓取完成后无法直接阅读和进行数据提取，还需要进行页面解析。我们使用BeautifulSoup对页面进行解析。
-```
-soup = BeautifulSoup(source_code, 'lxml')
-nameList = soup.findAll("li", {"class":"clear"})
-```
-
-+ 完成页面解析后就可以对页面中的关键信息进行提取了。下面我们分别对房源各个信息进行提取。
-```
-for name in nameList: # per house loop
-    i = i + 1
-    info_dict = {}
-    try:
-        housetitle = name.find("div", {"class":"title"})
-        info_dict.update({u'title':housetitle.get_text().strip()})
-        info_dict.update({u'link':housetitle.a.get('href')})
-
-        houseaddr = name.find("div", {"class":"address"})
-        info = houseaddr.div.get_text().split('|')
-        info_dict.update({u'community':info[0].strip()})
-        info_dict.update({u'housetype':info[1].strip()})
-        info_dict.update({u'square':info[2].strip()})
-        info_dict.update({u'direction':info[3].strip()})
-
-        housefloor = name.find("div", {"class":"flood"})
-        floor_all = housefloor.div.get_text().split('-')[0].strip().split(' ')
-        info_dict.update({u'floor':floor_all[0].strip()})
-        info_dict.update({u'years':floor_all[-1].strip()})
-
-        followInfo = name.find("div", {"class":"followInfo"})
-        info_dict.update({u'followInfo':followInfo.get_text()})
-
-        tax = name.find("div", {"class":"tag"})
-        info_dict.update({u'taxtype':tax.get_text().strip()})
-
-        totalPrice = name.find("div", {"class":"totalPrice"})
-        info_dict.update({u'totalPrice':int(totalPrice.span.get_text())})
-
-        unitPrice = name.find("div", {"class":"unitPrice"})
-        info_dict.update({u'unitPrice':int(unitPrice.get('data-price'))})
-        info_dict.update({u'houseID':unitPrice.get('data-hid')})
-    except:
-        continue
-```
-
-+ 提取完后，为了之后数据分析，要存进之前配置的数据库中。
-```
-model.Houseinfo.insert(**info_dict).upsert().execute()
-model.Hisprice.insert(houseID=info_dict['houseID'], totalPrice=info_dict['totalPrice']).upsert().execute()
-```
-# 分析北京住城区房源信息
+## 分析北京住城区房源信息
 
 * 导入链家网二手房在售房源的文件（数据更新时间2017-11-29）
 
