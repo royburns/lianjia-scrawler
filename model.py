@@ -71,7 +71,7 @@ class Houseinfo(BaseModel):
 
 class Hisprice(BaseModel):
 	houseID 	= CharField()
-	totalPrice 	= IntegerField()
+	totalPrice 	= CharField()
 	date 		= DateTimeField(default=datetime.datetime.now)
 
 	class Meta:
