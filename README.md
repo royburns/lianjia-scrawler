@@ -1,10 +1,7 @@
 # lianjia-scrawler
-+ This repo provides a tool to scrawl house info at LianJia.com and data would be stored in Mysql datatbase (Currently it also supports Sqlite and Postgres). It is easy to export to CSV or other formates. 
-+ Using Python Pandas ([source code](https://github.com/XuefengHuang/lianjia-scrawler/blob/master/data/lianjia.ipynb)) to analyse lianjia data to learn about onsale house info in one city.
-+ You also can [sync Mysql to Elasticsearch](https://github.com/siddontang/go-mysql-elasticsearch). In this way, you can use [kibana](https://github.com/elastic/kibana) to analyse these data.
-+ This tool could collect community infomation from each region at first, then you'd like to use these communities to learn about onsale, history price, sold and rent information.
-+ Please modify cookie info when this tool is blocked by lianjia due to ip traffic issue.
-+ Discard config.ini and use settings.py instead
++ 该项目提供一个链家网全国房源爬虫工具，数据存储目前支持Mysql,Sqlite和Postgres。非常方便转化成csv等格式文件。
++ 利用Python Pandas ([source code](https://github.com/XuefengHuang/lianjia-scrawler/blob/master/data/lianjia.ipynb))分析链家在线房源数据，本项目提供了一个例子可以参考。
++ 由于链家的反爬虫机制，所以该项目限制了爬虫速度。如果被封，可以修改header的cookie信息。
 
 ## 使用说明
 + 下载源码并安装依赖包
