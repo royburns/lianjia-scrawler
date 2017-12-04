@@ -5,7 +5,6 @@ import model
 import misc
 import time
 import datetime
-from dateutil.parser import parse
 import urllib2
 import logging
 
@@ -188,7 +187,7 @@ def get_sell_percommunity(communityname):
                     housetitle = name.find("div", {"class":"title"})
                     info_dict.update({u'title':housetitle.get_text().strip()})
                     info_dict.update({u'link':housetitle.a.get('href')})
-                    houseID = int(housetitle.a.get('href').split("/")[-1].split(".")[0])
+                    houseID = housetitle.a.get('href').split("/")[-1].split(".")[0]
                     info_dict.update({u'houseID':houseID})
 
                     house = housetitle.get_text().strip().split(' ')
@@ -222,9 +221,7 @@ def get_sell_percommunity(communityname):
                         info_dict.update({u'unitPrice':unitPrice.span.get_text()})
 
                     dealDate= name.find("div", {"class":"dealDate"})
-                    date = dealDate.get_text()
-                    if is_date(date):
-                        info_dict.update({u'dealdate':date})
+                    info_dict.update({u'dealdate':dealDate.get_text()})
 
                 except:
                     continue
@@ -329,7 +326,7 @@ def get_rent_percommunity(communityname):
                     housetitle = name.find("div", {"class":"info-panel"})
                     info_dict.update({u'title':housetitle.get_text().strip()})
                     info_dict.update({u'link':housetitle.a.get('href')})
-                    houseID = int(housetitle.a.get('href').split("/")[-1].split(".")[0])
+                    houseID = housetitle.a.get('href').split("/")[-1].split(".")[0]
                     info_dict.update({u'houseID':houseID})
 
                     region = name.find("span", {"class":"region"})
@@ -403,7 +400,7 @@ def get_house_perregion(district):
                     housetitle = name.find("div", {"class":"title"})
                     info_dict.update({u'title':housetitle.get_text().strip()})
                     info_dict.update({u'link':housetitle.a.get('href')})
-                    houseID = int(housetitle.a.get('data-housecode'))
+                    houseID = housetitle.a.get('data-housecode')
                     info_dict.update({u'houseID':houseID})
 
 
@@ -561,10 +558,3 @@ def check_block(soup):
 
 def log_progress(function, address, page, total):
     logging.info("Progress: %s %s: current page %d total pages %d" %(function, address, page, total))
-
-def is_date(string):
-    try:
-        parse(string)
-        return True
-    except ValueError:
-        return False
