@@ -188,40 +188,40 @@ def get_sell_percommunity(communityname):
                     info_dict.update({u'title':housetitle.get_text().strip()})
                     info_dict.update({u'link':housetitle.a.get('href')})
                     houseID = housetitle.a.get('href').split("/")[-1].split(".")[0]
-                    info_dict.update({u'houseID':houseID})
+                    info_dict.update({u'houseID':houseID.strip()})
 
                     house = housetitle.get_text().strip().split(' ')
-                    info_dict.update({u'community':house[0]})
-                    info_dict.update({u'housetype':house[1]})
-                    info_dict.update({u'square':house[2]})
+                    info_dict.update({u'community':house[0].strip()})
+                    info_dict.update({u'housetype':house[1].strip()})
+                    info_dict.update({u'square':house[2].strip()})
 
                     houseinfo = name.find("div", {"class":"houseInfo"})
                     info = houseinfo.get_text().split('|')
-                    info_dict.update({u'direction':info[0]})
-                    info_dict.update({u'status':info[1]})
+                    info_dict.update({u'direction':info[0].strip()})
+                    info_dict.update({u'status':info[1].strip()})
 
                     housefloor = name.find("div", {"class":"positionInfo"})
                     floor_all = housefloor.get_text().strip().split(' ')
-                    info_dict.update({u'floor':floor_all[0]})
-                    info_dict.update({u'years':floor_all[-1]})
+                    info_dict.update({u'floor':floor_all[0].strip()})
+                    info_dict.update({u'years':floor_all[-1].strip()})
 
                     followInfo = name.find("div", {"class":"source"})
-                    info_dict.update({u'source':followInfo.get_text()})
+                    info_dict.update({u'source':followInfo.get_text().strip()})
 
                     totalPrice = name.find("div", {"class":"totalPrice"})
                     if totalPrice.span is None:
-                        info_dict.update({u'totalPrice':totalPrice.get_text()})
+                        info_dict.update({u'totalPrice':totalPrice.get_text().strip()})
                     else:
-                        info_dict.update({u'totalPrice':totalPrice.span.get_text()})
+                        info_dict.update({u'totalPrice':totalPrice.span.get_text().strip()})
 
                     unitPrice = name.find("div", {"class":"unitPrice"})
                     if unitPrice.span is None:
-                        info_dict.update({u'unitPrice':unitPrice.get_text()})
+                        info_dict.update({u'unitPrice':unitPrice.get_text().strip()})
                     else:
-                        info_dict.update({u'unitPrice':unitPrice.span.get_text()})
+                        info_dict.update({u'unitPrice':unitPrice.span.get_text().strip()})
 
                     dealDate= name.find("div", {"class":"dealDate"})
-                    info_dict.update({u'dealdate':dealDate.get_text()})
+                    info_dict.update({u'dealdate':dealDate.get_text().strip()})
 
                 except:
                     continue
