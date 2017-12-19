@@ -283,6 +283,10 @@ def get_community_perregion(regionname=u'xicheng'):
 
                 info_dict.update({u'id':name.get('data-housecode')})
 
+                price = name.find("div", {"class":"totalPrice"})
+                info_dict.update({u'price':price.span.get_text().strip('\n')})
+
+
                 communityinfo = get_communityinfo_by_url(link)
                 for key, value in communityinfo.iteritems():
                     info_dict.update({key:value})

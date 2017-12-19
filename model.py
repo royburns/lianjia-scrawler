@@ -50,6 +50,7 @@ class Community(BaseModel):
 	company     = CharField(null=True)
 	building_num= CharField(null=True)
 	house_num   = CharField(null=True)
+	price   	= CharField(null=True)
 	validdate 	= DateTimeField(default=datetime.datetime.now)
 
 class Houseinfo(BaseModel):
