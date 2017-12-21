@@ -59,6 +59,20 @@ def get_total_pages(url):
     total_pages = int(page_info_str.split(':')[1])
     return total_pages
 
+def get_sh_total_pages(url):
+    source_code = get_source_code(url)
+    soup = BeautifulSoup(source_code, 'lxml')
+    total_pages = 0
+    try:
+        page_info = soup.find('a',{'gahref':'results_totalpage'})
+    except AttributeError as e:
+        page_info = None
+
+    if page_info == None:
+        return 1
+    total_pages = int(page_info.get_text().strip('')) #<a href="/xiaoqu/putuo/d58" gahref="results_totalpage">58</a>
+    return total_pages
+
 #===========proxy ip spider, we do not use now because it is not stable===========
 proxys_src = []
 proxys = []

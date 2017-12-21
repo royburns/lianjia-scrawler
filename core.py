@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import settings
 import model
 import misc
+import shlib
 import time
 import datetime
 import urllib2
@@ -10,12 +11,15 @@ import logging
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 BASE_URL = u"http://%s.lianjia.com/" % (settings.CITY)
+CITY = settings.CITY
 
 def GetHouseByCommunitylist(communitylist):
     logging.info("Get House Infomation")
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
+            if CITY == 'sh':
+                shlib.get_house_percommunity(community)
             get_house_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -29,6 +33,8 @@ def GetSellByCommunitylist(communitylist):
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
+            if CITY == 'sh':
+                shlib.get_sell_percommunity(community)
             get_sell_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -42,6 +48,8 @@ def GetRentByCommunitylist(communitylist):
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
+            if CITY == 'sh':
+                shlib.get_rent_percommunity(community)
             get_rent_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -55,6 +63,8 @@ def GetCommunityByRegionlist(regionlist=[u'xicheng']):
     starttime = datetime.datetime.now()
     for regionname in regionlist:
         try:
+            if CITY == 'sh':
+                shlib.get_community_perregion(regionname)
             get_community_perregion(regionname)
             logging.info(regionname + "Done")
         except Exception as e:
@@ -69,6 +79,8 @@ def GetHouseByRegionlist(regionlist=[u'xicheng']):
     for regionname in regionlist:
         logging.info("Get Onsale House Infomation in %s" % regionname)
         try:
+            if CITY == 'sh':
+                shlib.get_house_perregion(regionname)
             get_house_perregion(regionname)
         except Exception as e:
             logging.error(e)
@@ -81,6 +93,8 @@ def GetRentByRegionlist(regionlist=[u'xicheng']):
     for regionname in regionlist:
         logging.info("Get Rent House Infomation in %s" % regionname)
         try:
+            if CITY == 'sh':
+                shlib.get_rent_perregion(regionname)
             get_rent_perregion(regionname)
         except Exception as e:
             logging.error(e)
