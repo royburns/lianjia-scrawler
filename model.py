@@ -42,7 +42,7 @@ class Community(BaseModel):
 	bizcircle 	= CharField()
 	tagList 	= CharField()
 	onsale 		= CharField()
-	onrent 		= CharField()
+	onrent 		= CharField(null=True)
 	year        = CharField(null=True)
 	housetype   = CharField(null=True)
 	cost        = CharField(null=True)
