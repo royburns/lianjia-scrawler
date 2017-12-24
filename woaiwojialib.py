@@ -40,7 +40,11 @@ def GetSellByCommunitylist():
 		    	source_code = misc.get_source_code("https://bj.5i5j.com/sold/%s/n%d/" % (code,page))
 		    	soup = BeautifulSoup(source_code, 'lxml')
 		    	content = soup.find('ul', class_="pList zu")
-		    	lists = content.find_all('li')
+		    	try:
+		    		lists = content.find_all('li')
+		    	except:
+		    		continue
+
 		    	for each in lists:
 		    		info_dict = {}
 		    		sTit = each.find("p", {"class":"sTit"})
