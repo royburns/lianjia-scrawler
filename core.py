@@ -235,7 +235,7 @@ def get_sell_percommunity(communityname):
                         info_dict.update({u'unitPrice':unitPrice.span.get_text().strip()})
 
                     dealDate= name.find("div", {"class":"dealDate"})
-                    info_dict.update({u'dealdate':dealDate.get_text().strip()})
+                    info_dict.update({u'dealdate':dealDate.get_text().strip().replace('.','-')})
 
                 except:
                     continue

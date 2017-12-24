@@ -51,7 +51,7 @@ def GetSellByCommunitylist():
 		    		housetype = plist[1].get_text().strip().split(u'·')[0]
 		    		square = plist[1].get_text().strip().split(u'·')[1]
 		    		direction = plist[1].get_text().strip().split(u'·')[2]
-		    		dealdate = plist[2].get_text().strip().split(u'：')[1].replace('-','.')
+		    		dealdate = plist[2].get_text().strip().split(u'：')[1]
 		    		jiage = each.find("div", {"class":"jiage"})
 		    		totalPrice = jiage.strong.get_text().strip()
 		    		unitPrice = find_between_r(jiage.p.get_text().strip(),u'价',u'元')
