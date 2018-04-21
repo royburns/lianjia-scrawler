@@ -131,11 +131,11 @@ def get_house_percommunity(communityname):
             info_dict = {}
             try:
                 housetitle = name.find("div", {"class":"title"})
-                info_dict.update({u'title':housetitle.get_text().strip()})
+                info_dict.update({u'title':housetitle.a.get_text().strip()})
                 info_dict.update({u'link':housetitle.a.get('href')})
 
                 houseaddr = name.find("div", {"class":"address"})
-                info = houseaddr.div.get_text().split('|')
+                info = houseaddr.div.get_text().split('/')
                 info_dict.update({u'community':info[0].strip()})
                 info_dict.update({u'housetype':info[1].strip()})
                 info_dict.update({u'square':info[2].strip()})
@@ -416,14 +416,14 @@ def get_house_perregion(district):
                 info_dict = {}
                 try:
                     housetitle = name.find("div", {"class":"title"})
-                    info_dict.update({u'title':housetitle.get_text().strip()})
+                    info_dict.update({u'title':housetitle.a.get_text().strip()})
                     info_dict.update({u'link':housetitle.a.get('href')})
                     houseID = housetitle.a.get('data-housecode')
                     info_dict.update({u'houseID':houseID})
 
 
                     houseinfo = name.find("div", {"class":"houseInfo"})
-                    info = houseinfo.get_text().split('|')
+                    info = houseinfo.get_text().split('/')
                     info_dict.update({u'community':info[0]})
                     info_dict.update({u'housetype':info[1]})
                     info_dict.update({u'square':info[2]})
