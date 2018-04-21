@@ -26,7 +26,10 @@ def get_totalpage(url):
 	if info == None:
 		return 1
 	alist = info.find_all("a")
-	page = int(alist[1].get_text().strip())
+	try:
+		page = int(alist[1].get_text().strip())
+	except:
+		page = 1
 	return page
 
 def GetSellByCommunitylist():
