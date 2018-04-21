@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import settings
 import model
 import misc
-import shlib
 import time
 import datetime
 import urllib2
@@ -18,8 +17,6 @@ def GetHouseByCommunitylist(communitylist):
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
-            if CITY == 'sh':
-                shlib.get_house_percommunity(community)
             get_house_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -33,8 +30,6 @@ def GetSellByCommunitylist(communitylist):
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
-            if CITY == 'sh':
-                shlib.get_sell_percommunity(community)
             get_sell_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -48,8 +43,6 @@ def GetRentByCommunitylist(communitylist):
     starttime = datetime.datetime.now()
     for community in communitylist:
         try:
-            if CITY == 'sh':
-                shlib.get_rent_percommunity(community)
             get_rent_percommunity(community)
         except Exception as e:
             logging.error(e)
@@ -63,8 +56,6 @@ def GetCommunityByRegionlist(regionlist=[u'xicheng']):
     starttime = datetime.datetime.now()
     for regionname in regionlist:
         try:
-            if CITY == 'sh':
-                shlib.get_community_perregion(regionname)
             get_community_perregion(regionname)
             logging.info(regionname + "Done")
         except Exception as e:
@@ -79,8 +70,6 @@ def GetHouseByRegionlist(regionlist=[u'xicheng']):
     for regionname in regionlist:
         logging.info("Get Onsale House Infomation in %s" % regionname)
         try:
-            if CITY == 'sh':
-                shlib.get_house_perregion(regionname)
             get_house_perregion(regionname)
         except Exception as e:
             logging.error(e)
@@ -93,8 +82,6 @@ def GetRentByRegionlist(regionlist=[u'xicheng']):
     for regionname in regionlist:
         logging.info("Get Rent House Infomation in %s" % regionname)
         try:
-            if CITY == 'sh':
-                shlib.get_rent_perregion(regionname)
             get_rent_perregion(regionname)
         except Exception as e:
             logging.error(e)
@@ -135,7 +122,10 @@ def get_house_percommunity(communityname):
                 info_dict.update({u'link':housetitle.a.get('href')})
 
                 houseaddr = name.find("div", {"class":"address"})
-                info = houseaddr.div.get_text().split('/')
+                if CITY == 'bj':
+                    info = houseaddr.div.get_text().split('/')
+                else:
+                    info = houseaddr.div.get_text().split('|')
                 info_dict.update({u'community':info[0].strip()})
                 info_dict.update({u'housetype':info[1].strip()})
                 info_dict.update({u'square':info[2].strip()})
@@ -423,7 +413,10 @@ def get_house_perregion(district):
 
 
                     houseinfo = name.find("div", {"class":"houseInfo"})
-                    info = houseinfo.get_text().split('/')
+                    if CITY == 'bj':
+                        info = houseinfo.get_text().split('/')
+                    else:
+                        info = houseinfo.get_text().split('|')
                     info_dict.update({u'community':info[0]})
                     info_dict.update({u'housetype':info[1]})
                     info_dict.update({u'square':info[2]})
@@ -448,9 +441,9 @@ def get_house_perregion(district):
 
                     unitPrice = name.find("div", {"class":"unitPrice"})
                     info_dict.update({u'unitPrice':unitPrice.get("data-price")})
-
                 except:
                     continue
+
                 # Houseinfo insert into mysql
                 data_source.append(info_dict)
                 hisprice_data_source.append({"houseID":info_dict["houseID"], "totalPrice":info_dict["totalPrice"]})
