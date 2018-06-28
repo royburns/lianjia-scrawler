@@ -542,13 +542,13 @@ def get_communityinfo_by_url(url):
     res = {}
     for info in communityinfos:
         key_type = {
-        u"建筑年代": "year",
-        u"建筑类型": "housetype",
-        u"物业费用": "cost",
-        u"物业公司": "service",
-        u"开发商": "company",
-        u"楼栋总数": "building_num",
-        u"房屋总数": "house_num",
+        u"建筑年代": u'year',
+        u"建筑类型": u'housetype',
+        u"物业费用": u'cost',
+        u"物业公司": u'service',
+        u"开发商": u'company',
+        u"楼栋总数": u'building_num',
+        u"房屋总数": u'house_num',
         }
         try:
             key = info.find("span",{"xiaoquInfoLabel"})
